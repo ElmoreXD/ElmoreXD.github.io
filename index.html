@@ -2,14 +2,14 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>积分商城 - 环保回收</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>环保回收 - 积分商城</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: "PingFang SC", "Helvetica Neue", Arial, sans-serif;
         }
         
         body {
@@ -24,238 +24,356 @@
         
         .container {
             padding: 15px;
-            padding-bottom: 80px;
         }
         
-        /* 顶部导航 */
+        /* 头部样式 */
         .header {
-            background-color: #84AE8E;
+            background: linear-gradient(135deg, #84AE8E, #6A9578);
             color: white;
-            padding: 15px;
-            text-align: center;
-            position: relative;
-            border-radius: 0 0 15px 15px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        
-        .header h1 {
-            font-size: 18px;
-            font-weight: 600;
+            padding: 20px 15px;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 4px 12px rgba(132, 174, 142, 0.2);
         }
         
         .user-info {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 10px;
+            margin-bottom: 15px;
         }
         
-        .points {
-            background-color: rgba(255,255,255,0.2);
-            padding: 5px 12px;
-            border-radius: 20px;
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+        
+        .user-name {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .points-display {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .points-value {
+            font-size: 36px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .points-label {
             font-size: 14px;
+            opacity: 0.9;
         }
         
-        /* 选项卡 */
-        .tabs {
+        /* 导航栏样式 */
+        .nav-tabs {
             display: flex;
             background-color: white;
-            border-radius: 10px;
+            border-radius: 12px;
+            padding: 5px;
             margin: 15px 0;
-            overflow: hidden;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
         
-        .tab {
+        .nav-tab {
             flex: 1;
             text-align: center;
             padding: 12px 0;
-            font-size: 14px;
-            transition: all 0.3s;
-            position: relative;
-        }
-        
-        .tab.active {
-            color: #84AE8E;
-            font-weight: 600;
-        }
-        
-        .tab.active::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 20%;
-            width: 60%;
-            height: 3px;
-            background-color: #84AE8E;
-            border-radius: 3px;
-        }
-        
-        /* 商品分类 */
-        .category-section {
-            display: none;
-        }
-        
-        .category-section.active {
-            display: block;
-        }
-        
-        .category-tabs {
-            display: flex;
-            background-color: white;
-            border-radius: 10px;
-            margin-bottom: 15px;
-            overflow: hidden;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-        
-        .category-tab {
-            flex: 1;
-            text-align: center;
-            padding: 10px 0;
-            font-size: 13px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 500;
             transition: all 0.3s;
         }
         
-        .category-tab.active {
+        .nav-tab.active {
             background-color: #84AE8E;
             color: white;
         }
         
-        .goods-list {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-        }
-        
-        .goods-item {
+        /* 卡片样式 */
+        .card {
             background-color: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-        
-        .goods-img {
-            width: 100%;
-            height: 120px;
-            background-color: #f0f0f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #999;
-            font-size: 12px;
-        }
-        
-        .goods-info {
-            padding: 10px;
-        }
-        
-        .goods-name {
-            font-size: 14px;
-            margin-bottom: 5px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        
-        .goods-points {
-            color: #84AE8E;
-            font-weight: 600;
-            font-size: 14px;
-        }
-        
-        /* 抽奖专区 */
-        .lottery-section {
-            display: none;
-            text-align: center;
-        }
-        
-        .lottery-section.active {
-            display: block;
-        }
-        
-        .lottery-wheel {
-            width: 280px;
-            height: 280px;
-            margin: 20px auto;
-            position: relative;
-            background-color: white;
-            border-radius: 50%;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
-        
-        .wheel-center {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80px;
-            height: 80px;
-            background-color: #84AE8E;
-            border-radius: 50%;
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        
-        .lottery-cost {
-            margin: 10px 0 20px;
-            font-size: 14px;
-            color: #666;
-        }
-        
-        .records-section {
-            background-color: white;
-            border-radius: 10px;
+            border-radius: 12px;
             padding: 15px;
-            margin-top: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
         
-        .section-title {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 10px;
+        .card-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 15px;
         }
         
-        .see-all {
-            font-size: 12px;
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .card-more {
+            color: #84AE8E;
+            font-size: 14px;
+        }
+        
+        /* 积分管理部分 */
+        .points-management {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        
+        .management-item {
+            background-color: #f8faf9;
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .management-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #e8f2eb;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
             color: #84AE8E;
         }
         
-        .record-list {
+        .management-title {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        
+        .management-desc {
+            font-size: 12px;
+            color: #888;
+        }
+        
+        /* 图表容器 */
+        .chart-container {
+            height: 200px;
+            margin: 10px 0;
+            position: relative;
+        }
+        
+        .chart {
+            width: 100%;
+            height: 100%;
+            background-color: #f8faf9;
+            border-radius: 8px;
+            display: flex;
+            align-items: flex-end;
+            padding: 10px;
+        }
+        
+        .chart-bar {
+            flex: 1;
+            background-color: #84AE8E;
+            margin: 0 3px;
+            border-radius: 4px 4px 0 0;
+            position: relative;
+        }
+        
+        .chart-label {
+            position: absolute;
+            bottom: -20px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 10px;
+            color: #666;
+        }
+        
+        /* 历史记录 */
+        .history-list {
             max-height: 200px;
             overflow-y: auto;
         }
         
-        .record-item {
-            padding: 10px 0;
-            border-bottom: 1px solid #f0f0f0;
+        .history-item {
             display: flex;
             justify-content: space-between;
-            font-size: 14px;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
         }
         
-        .record-item:last-child {
+        .history-item:last-child {
             border-bottom: none;
         }
         
-        .record-name {
-            flex: 1;
+        .history-info {
+            display: flex;
+            flex-direction: column;
         }
         
-        .record-date {
-            color: #999;
+        .history-title {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        
+        .history-date {
             font-size: 12px;
+            color: #888;
+        }
+        
+        .history-points {
+            font-weight: 600;
+            color: #84AE8E;
+        }
+        
+        /* 兑换商品 */
+        .products-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        
+        .product-card {
+            background-color: #f8faf9;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .product-image {
+            height: 100px;
+            background-color: #e8f2eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #84AE8E;
+        }
+        
+        .product-info {
+            padding: 10px;
+        }
+        
+        .product-name {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        
+        .product-points {
+            font-size: 12px;
+            color: #84AE8E;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .progress-bar {
+            height: 6px;
+            background-color: #e0e0e0;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 5px;
+        }
+        
+        .progress {
+            height: 100%;
+            background-color: #84AE8E;
+            border-radius: 3px;
+        }
+        
+        .progress-text {
+            font-size: 10px;
+            color: #888;
+            text-align: right;
+        }
+        
+        /* 环保贡献部分 */
+        .contribution-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .stat-item {
+            background-color: #f8faf9;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 20px;
+            font-weight: bold;
+            color: #84AE8E;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        /* 公益活动 */
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .activity-card {
+            background-color: #f8faf9;
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+        }
+        
+        .activity-image {
+            width: 80px;
+            height: 80px;
+            background-color: #e8f2eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #84AE8E;
+        }
+        
+        .activity-info {
+            flex: 1;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .activity-title {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        
+        .activity-desc {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        
+        .activity-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: #888;
         }
         
         /* 底部导航 */
@@ -270,230 +388,302 @@
             display: flex;
             justify-content: space-around;
             padding: 10px 0;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+            border-top: 1px solid #f0f0f0;
+            z-index: 100;
         }
         
         .nav-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            font-size: 12px;
-            color: #666;
-        }
-        
-        .nav-item.active {
-            color: #84AE8E;
         }
         
         .nav-icon {
             width: 24px;
             height: 24px;
             margin-bottom: 4px;
-            background-color: #f0f0f0;
-            border-radius: 50%;
-        }
-        
-        /* 商品详情弹窗 */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0,0,0,0.5);
-            z-index: 100;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .modal-content {
-            background-color: white;
-            width: 90%;
-            max-width: 350px;
-            border-radius: 15px;
-            overflow: hidden;
-            animation: modalShow 0.3s;
-        }
-        
-        @keyframes modalShow {
-            from { transform: scale(0.8); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-        
-        .modal-header {
-            padding: 15px;
-            text-align: center;
-            border-bottom: 1px solid #f0f0f0;
-            position: relative;
-        }
-        
-        .close-modal {
-            position: absolute;
-            right: 15px;
-            top: 15px;
-            font-size: 20px;
-            cursor: pointer;
-        }
-        
-        .modal-body {
-            padding: 15px;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-        
-        .modal-footer {
-            padding: 15px;
-            display: flex;
-            justify-content: space-between;
-            border-top: 1px solid #f0f0f0;
-        }
-        
-        .btn {
-            padding: 10px 20px;
-            border-radius: 20px;
-            border: none;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .btn-primary {
-            background-color: #84AE8E;
-            color: white;
-            flex: 1;
-            margin-left: 10px;
-        }
-        
-        .btn-secondary {
-            background-color: #f0f0f0;
             color: #666;
         }
         
-        .btn:active {
-            transform: scale(0.98);
+        .nav-label {
+            font-size: 10px;
+            color: #666;
+        }
+        
+        .nav-item.active .nav-icon,
+        .nav-item.active .nav-label {
+            color: #84AE8E;
+        }
+        
+        /* 页面内容区域 */
+        .page-content {
+            padding-bottom: 60px; /* 为底部导航留出空间 */
+        }
+        
+        /* 隐藏非活动页面 */
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
         }
     </style>
 </head>
 <body>
-    <!-- 顶部导航 -->
+    <!-- 头部区域 -->
     <div class="header">
-        <h1>积分商城</h1>
         <div class="user-info">
-            <div>欢迎回来，环保达人</div>
-            <div class="points">积分：1280</div>
+            <div class="user-avatar">👤</div>
+            <div class="user-name">环保达人</div>
+            <div>设置</div>
+        </div>
+        <div class="points-display">
+            <div class="points-label">当前积分</div>
+            <div class="points-value">1,258</div>
+            <div class="points-label">可兑换环保好物</div>
         </div>
     </div>
     
+    <!-- 导航标签 -->
     <div class="container">
-        <!-- 主选项卡 -->
-        <div class="tabs">
-            <div class="tab active" data-tab="goods">商品分类</div>
-            <div class="tab" data-tab="exchange">兑换操作</div>
-            <div class="tab" data-tab="lottery">抽奖专区</div>
+        <div class="nav-tabs">
+            <div class="nav-tab active" data-page="points-management">积分管理</div>
+            <div class="nav-tab" data-page="environmental-contribution">环保贡献</div>
         </div>
-        
-        <!-- 商品分类板块 -->
-        <div class="category-section active" id="goods-section">
-            <!-- 商品分类子选项卡 -->
-            <div class="category-tabs">
-                <div class="category-tab active" data-category="physical">实物商品</div>
-                <div class="category-tab" data-category="service">服务权益</div>
-                <div class="category-tab" data-category="coupon">优惠券</div>
+    </div>
+    
+    <!-- 积分管理页面 -->
+    <div class="page active" id="points-management">
+        <div class="container">
+            <!-- 积分管理功能入口 -->
+            <div class="card">
+                <div class="points-management">
+                    <div class="management-item">
+                        <div class="management-icon">📊</div>
+                        <div class="management-title">实时计算</div>
+                        <div class="management-desc">积分获取趋势</div>
+                    </div>
+                    <div class="management-item">
+                        <div class="management-icon">📝</div>
+                        <div class="management-title">历史收益</div>
+                        <div class="management-desc">回收记录查询</div>
+                    </div>
+                    <div class="management-item">
+                        <div class="management-icon">🔄</div>
+                        <div class="management-title">积分兑换</div>
+                        <div class="management-desc">兑换环保好物</div>
+                    </div>
+                    <div class="management-item">
+                        <div class="management-icon">🏆</div>
+                        <div class="management-title">积分排行</div>
+                        <div class="management-desc">社区环保达人</div>
+                    </div>
+                </div>
             </div>
             
-            <!-- 商品列表 -->
-            <div class="goods-list">
-                <!-- 商品项1 -->
-                <div class="goods-item" data-id="1">
-                    <div class="goods-img">商品图片</div>
-                    <div class="goods-info">
-                        <div class="goods-name">环保帆布袋</div>
-                        <div class="goods-points">500积分</div>
+            <!-- 实时计算图表 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">积分获取趋势</div>
+                    <div class="card-more">查看详情</div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart">
+                        <div class="chart-bar" style="height: 70%;">
+                            <div class="chart-label">周一</div>
+                        </div>
+                        <div class="chart-bar" style="height: 50%;">
+                            <div class="chart-label">周二</div>
+                        </div>
+                        <div class="chart-bar" style="height: 80%;">
+                            <div class="chart-label">周三</div>
+                        </div>
+                        <div class="chart-bar" style="height: 60%;">
+                            <div class="chart-label">周四</div>
+                        </div>
+                        <div class="chart-bar" style="height: 90%;">
+                            <div class="chart-label">周五</div>
+                        </div>
+                        <div class="chart-bar" style="height: 75%;">
+                            <div class="chart-label">周六</div>
+                        </div>
+                        <div class="chart-bar" style="height: 85%;">
+                            <div class="chart-label">周日</div>
+                        </div>
                     </div>
                 </div>
-                
-                <!-- 商品项2 -->
-                <div class="goods-item" data-id="2">
-                    <div class="goods-img">商品图片</div>
-                    <div class="goods-info">
-                        <div class="goods-name">不锈钢吸管套装</div>
-                        <div class="goods-points">800积分</div>
+                <div style="text-align: center; font-size: 12px; color: #888; margin-top: 10px;">
+                    本周已获得 210 积分
+                </div>
+            </div>
+            
+            <!-- 历史收益记录 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">最近回收记录</div>
+                    <div class="card-more">查看全部</div>
+                </div>
+                <div class="history-list">
+                    <div class="history-item">
+                        <div class="history-info">
+                            <div class="history-title">塑料瓶回收</div>
+                            <div class="history-date">2023-10-15 14:30</div>
+                        </div>
+                        <div class="history-points">+25</div>
+                    </div>
+                    <div class="history-item">
+                        <div class="history-info">
+                            <div class="history-title">纸箱回收</div>
+                            <div class="history-date">2023-10-14 10:15</div>
+                        </div>
+                        <div class="history-points">+18</div>
+                    </div>
+                    <div class="history-item">
+                        <div class="history-info">
+                            <div class="history-title">旧衣物回收</div>
+                            <div class="history-date">2023-10-12 16:45</div>
+                        </div>
+                        <div class="history-points">+35</div>
+                    </div>
+                    <div class="history-item">
+                        <div class="history-info">
+                            <div class="history-title">电子产品回收</div>
+                            <div class="history-date">2023-10-10 09:20</div>
+                        </div>
+                        <div class="history-points">+50</div>
                     </div>
                 </div>
-                
-                <!-- 商品项3 -->
-                <div class="goods-item" data-id="3">
-                    <div class="goods-img">商品图片</div>
-                    <div class="goods-info">
-                        <div class="goods-name">竹纤维毛巾</div>
-                        <div class="goods-points">300积分</div>
-                    </div>
+            </div>
+            
+            <!-- 积分兑换 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">热门兑换</div>
+                    <div class="card-more">更多好物</div>
                 </div>
-                
-                <!-- 商品项4 -->
-                <div class="goods-item" data-id="4">
-                    <div class="goods-img">商品图片</div>
-                    <div class="goods-info">
-                        <div class="goods-name">植物洗发皂</div>
-                        <div class="goods-points">450积分</div>
+                <div class="products-grid">
+                    <div class="product-card">
+                        <div class="product-image">🌱</div>
+                        <div class="product-info">
+                            <div class="product-name">环保购物袋</div>
+                            <div class="product-points">500 积分</div>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 75%;"></div>
+                            </div>
+                            <div class="progress-text">还差125积分</div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">♻️</div>
+                        <div class="product-info">
+                            <div class="product-name">不锈钢吸管</div>
+                            <div class="product-points">300 积分</div>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 42%;"></div>
+                            </div>
+                            <div class="progress-text">还差174积分</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        
-        <!-- 兑换操作板块 -->
-        <div class="category-section" id="exchange-section">
-            <!-- 兑换记录 -->
-            <div class="records-section">
-                <div class="section-title">
-                    <span>兑换记录</span>
-                    <span class="see-all">查看全部</span>
-                </div>
-                <div class="record-list">
-                    <div class="record-item">
-                        <div class="record-name">环保帆布袋</div>
-                        <div class="record-date">2023-06-15</div>
+    </div>
+    
+    <!-- 环保贡献页面 -->
+    <div class="page" id="environmental-contribution">
+        <div class="container">
+            <!-- 环保数据统计 -->
+            <div class="card">
+                <div class="contribution-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">58.6kg</div>
+                        <div class="stat-label">累计回收</div>
                     </div>
-                    <div class="record-item">
-                        <div class="record-name">不锈钢吸管套装</div>
-                        <div class="record-date">2023-06-10</div>
+                    <div class="stat-item">
+                        <div class="stat-value">126.3kg</div>
+                        <div class="stat-label">减少碳排放</div>
                     </div>
-                    <div class="record-item">
-                        <div class="record-name">竹纤维毛巾</div>
-                        <div class="record-date">2023-06-05</div>
+                    <div class="stat-item">
+                        <div class="stat-value">42</div>
+                        <div class="stat-label">回收次数</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">社区第8</div>
+                        <div class="stat-label">环保排名</div>
                     </div>
                 </div>
             </div>
-        </div>
-        
-        <!-- 抽奖专区板块 -->
-        <div class="lottery-section" id="lottery-section">
-            <!-- 抽奖转盘 -->
-            <div class="lottery-wheel">
-                <div class="wheel-center">开始抽奖</div>
+            
+            <!-- 个人环保报告 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">个人环保报告</div>
+                    <div class="card-more">查看详情</div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart">
+                        <div class="chart-bar" style="height: 40%; background-color: #A5D6A7;">
+                            <div class="chart-label">塑料</div>
+                        </div>
+                        <div class="chart-bar" style="height: 60%; background-color: #81C784;">
+                            <div class="chart-label">纸张</div>
+                        </div>
+                        <div class="chart-bar" style="height: 30%; background-color: #66BB6A;">
+                            <div class="chart-label">金属</div>
+                        </div>
+                        <div class="chart-bar" style="height: 50%; background-color: #4CAF50;">
+                            <div class="chart-label">玻璃</div>
+                        </div>
+                        <div class="chart-bar" style="height: 25%; background-color: #43A047;">
+                            <div class="chart-label">电子</div>
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align: center; font-size: 12px; color: #888; margin-top: 10px;">
+                    各类废品回收占比
+                </div>
             </div>
             
-            <div class="lottery-cost">每次抽奖消耗100积分</div>
-            
-            <!-- 中奖记录 -->
-            <div class="records-section">
-                <div class="section-title">
-                    <span>中奖记录</span>
-                    <span class="see-all">查看全部</span>
+            <!-- 公益活动 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">公益活动</div>
+                    <div class="card-more">查看更多</div>
                 </div>
-                <div class="record-list">
-                    <div class="record-item">
-                        <div class="record-name">环保帆布袋</div>
-                        <div class="record-date">2023-06-12</div>
+                <div class="activity-list">
+                    <div class="activity-card">
+                        <div class="activity-image">🌍</div>
+                        <div class="activity-info">
+                            <div class="activity-title">社区环保清洁日</div>
+                            <div class="activity-desc">参与社区环境清洁，共建美好家园</div>
+                            <div class="activity-meta">
+                                <span>10月28日</span>
+                                <span>距离1.2km</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="record-item">
-                        <div class="record-name">10元优惠券</div>
-                        <div class="record-date">2023-06-08</div>
+                    <div class="activity-card">
+                        <div class="activity-image">🌳</div>
+                        <div class="activity-info">
+                            <div class="activity-title">城市植树活动</div>
+                            <div class="activity-desc">为城市添一抹绿色，参与植树造林</div>
+                            <div class="activity-meta">
+                                <span>11月5日</span>
+                                <span>距离3.5km</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="record-item">
-                        <div class="record-name">谢谢参与</div>
-                        <div class="record-date">2023-06-05</div>
+                    <div class="activity-card">
+                        <div class="activity-image">📚</div>
+                        <div class="activity-info">
+                            <div class="activity-title">环保知识讲座</div>
+                            <div class="activity-desc">学习环保知识，提高环保意识</div>
+                            <div class="activity-meta">
+                                <span>11月12日</span>
+                                <span>线上活动</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -502,104 +692,44 @@
     
     <!-- 底部导航 -->
     <div class="bottom-nav">
-        <div class="nav-item">
-            <div class="nav-icon"></div>
-            <div>首页</div>
-        </div>
         <div class="nav-item active">
-            <div class="nav-icon"></div>
-            <div>积分商城</div>
+            <div class="nav-icon">🏠</div>
+            <div class="nav-label">首页</div>
         </div>
         <div class="nav-item">
-            <div class="nav-icon"></div>
-            <div>回收记录</div>
+            <div class="nav-icon">🔄</div>
+            <div class="nav-label">回收</div>
         </div>
         <div class="nav-item">
-            <div class="nav-icon"></div>
-            <div>我的</div>
+            <div class="nav-icon">🏪</div>
+            <div class="nav-label">商城</div>
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon">👤</div>
+            <div class="nav-label">我的</div>
         </div>
     </div>
-    
-    <!-- 商品详情弹窗 -->
-    <div class="modal" id="goods-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>商品详情</h2>
-                <div class="close-modal">×</div>
-            </div>
-            <div class="modal-body">
-                <div style="text-align: center; margin-bottom: 15px;">
-                    <div style="width: 200px; height: 150px; background-color: #f0f0f0; margin: 0 auto; display: flex; align-items: center; justify-content: center; color: #999;">商品图片</div>
-                </div>
-                <h3 style="margin-bottom: 10px;" id="modal-goods-name">环保帆布袋</h3>
-                <div style="color: #84AE8E; font-weight: bold; font-size: 18px; margin-bottom: 15px;" id="modal-goods-points">500积分</div>
-                <div style="font-size: 14px; line-height: 1.5; color: #666;">
-                    <p>商品描述：这是一款环保帆布袋，采用有机棉材料制作，坚固耐用，可重复使用，减少塑料袋的使用。</p>
-                    <p style="margin-top: 10px;">规格：35cm x 40cm</p>
-                    <p style="margin-top: 10px;">库存：98件</p>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" id="cancel-btn">取消</button>
-                <button class="btn btn-primary" id="exchange-btn">立即兑换</button>
-            </div>
-        </div>
-    </div>
-    
+
     <script>
-        // 选项卡切换
-        document.querySelectorAll('.tab').forEach(tab => {
+        // 切换标签页
+        document.querySelectorAll('.nav-tab').forEach(tab => {
             tab.addEventListener('click', function() {
-                // 移除所有active类
-                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                document.querySelectorAll('.category-section').forEach(s => s.classList.remove('active'));
-                
-                // 添加active类到当前选项卡
+                // 移除所有标签的active类
+                document.querySelectorAll('.nav-tab').forEach(t => {
+                    t.classList.remove('active');
+                });
+                // 添加当前标签的active类
                 this.classList.add('active');
                 
-                // 显示对应的内容区域
-                const tabId = this.getAttribute('data-tab');
-                document.getElementById(tabId + '-section').classList.add('active');
+                // 隐藏所有页面
+                document.querySelectorAll('.page').forEach(page => {
+                    page.classList.remove('active');
+                });
+                
+                // 显示对应页面
+                const pageId = this.getAttribute('data-page');
+                document.getElementById(pageId).classList.add('active');
             });
-        });
-        
-        // 商品分类切换
-        document.querySelectorAll('.category-tab').forEach(tab => {
-            tab.addEventListener('click', function() {
-                document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
-                this.classList.add('active');
-                // 实际应用中这里会加载对应分类的商品
-            });
-        });
-        
-        // 商品点击显示详情
-        document.querySelectorAll('.goods-item').forEach(item => {
-            item.addEventListener('click', function() {
-                const goodsId = this.getAttribute('data-id');
-                // 实际应用中这里会根据goodsId获取商品详情
-                document.getElementById('goods-modal').style.display = 'flex';
-            });
-        });
-        
-        // 关闭弹窗
-        document.querySelector('.close-modal').addEventListener('click', function() {
-            document.getElementById('goods-modal').style.display = 'none';
-        });
-        
-        document.getElementById('cancel-btn').addEventListener('click', function() {
-            document.getElementById('goods-modal').style.display = 'none';
-        });
-        
-        // 兑换按钮
-        document.getElementById('exchange-btn').addEventListener('click', function() {
-            alert('兑换成功！');
-            document.getElementById('goods-modal').style.display = 'none';
-        });
-        
-        // 抽奖按钮
-        document.querySelector('.wheel-center').addEventListener('click', function() {
-            alert('开始抽奖！消耗100积分');
-            // 实际应用中这里会有抽奖逻辑
         });
     </script>
 </body>
